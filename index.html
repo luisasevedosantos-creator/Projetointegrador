@@ -7,7 +7,7 @@
 <meta name="description" content="Projeto Integrador: sistema conceitual de aquecimento solar e automação para a piscina térmica do CEP, com óptica, robótica e acessibilidade digital.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -55,7 +55,7 @@
 
 <main id="conteudo">
 
-  <!-- ===== HERO (arte primeiro, texto depois — layout invertido) ===== -->
+  <!-- ===== HERO ===== -->
   <section id="inicio" class="hero" aria-label="Abertura">
     <div class="hero-art" aria-hidden="true">
       <svg viewBox="0 0 480 420" width="100%" height="100%" role="img" aria-label="Ilustração de um coletor solar circular ao lado de uma piscina, com a água ganhando tons quentes">
@@ -270,7 +270,7 @@
     </div>
   </section>
 
-  <!-- ===== SIMULADOR (painel de controle primeiro, visual depois) ===== -->
+  <!-- ===== SIMULADOR ===== -->
   <section id="simulador" class="section section-alt">
     <div class="section-head">
       <p class="eyebrow">04 · Uso de Tecnologias Web</p>
@@ -390,20 +390,28 @@
     </div>
     <div class="cards team-cards">
       <div class="card">
-        <h3>Integrante 1</h3>
-        <p>Função no projeto (ex.: pesquisa de óptica)</p>
+        <h3>Lais</h3>
+        <p>Pesquisa e roteiro de óptica</p>
       </div>
       <div class="card">
-        <h3>Integrante 2</h3>
-        <p>Função no projeto (ex.: programação do simulador)</p>
+        <h3>Duda</h3>
+        <p>Design visual e acessibilidade</p>
       </div>
       <div class="card">
-        <h3>Integrante 3</h3>
-        <p>Função no projeto (ex.: design e acessibilidade do site)</p>
+        <h3>Arthur</h3>
+        <p>Programação do simulador</p>
       </div>
       <div class="card">
-        <h3>Integrante 4</h3>
-        <p>Função no projeto (ex.: automação e sensores)</p>
+        <h3>Guilherme</h3>
+        <p>Automação e sensores</p>
+      </div>
+      <div class="card">
+        <h3>Lucas</h3>
+        <p>Redação e impacto socioambiental</p>
+      </div>
+      <div class="card">
+        <h3>Luis</h3>
+        <p>Apresentação e documentação</p>
       </div>
     </div>
 
@@ -411,13 +419,10 @@
       <h3>Fale com a equipe</h3>
       <label for="campo-nome">Nome</label>
       <input type="text" id="campo-nome" name="nome" placeholder="Seu nome" required>
-
       <label for="campo-email">E-mail</label>
       <input type="email" id="campo-email" name="email" placeholder="seuemail@exemplo.com" required>
-
       <label for="campo-mensagem">Mensagem</label>
       <textarea id="campo-mensagem" name="mensagem" rows="5" placeholder="Sua dúvida, sugestão ou elogio" required></textarea>
-
       <button type="submit" class="btn btn-primary">Enviar mensagem</button>
       <p id="mensagem-envio" role="status" aria-live="polite"></p>
     </form>

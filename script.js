@@ -1,103 +1,94 @@
-// =========================================================
-// Raiar CEP — script.js
-// =========================================================
+// ===================================================================
+// Raiar CEP — interatividade do site
+// ===================================================================
+
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- Menu mobile ---------- */
+  /* ---------- menu mobile ---------- */
   const menuToggle = document.getElementById('menu-toggle');
   const nav = document.getElementById('nav-principal');
 
   if (menuToggle && nav) {
     menuToggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      const aberto = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!aberto));
+      nav.classList.toggle('open', !aberto);
     });
 
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        nav.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('open');
       });
     });
   }
 
-  /* ---------- Alto contraste ---------- */
+  /* ---------- alto contraste ---------- */
   const btnContraste = document.getElementById('btn-contraste');
   if (btnContraste) {
-    const salvo = localStorage.getItem('raiar-cep-contraste') === '1';
-    if (salvo) {
-      document.body.classList.add('alto-contraste');
-      btnContraste.setAttribute('aria-pressed', 'true');
-    }
     btnContraste.addEventListener('click', () => {
       const ativo = document.body.classList.toggle('alto-contraste');
       btnContraste.setAttribute('aria-pressed', String(ativo));
-      localStorage.setItem('raiar-cep-contraste', ativo ? '1' : '0');
     });
   }
 
-  /* ---------- Tamanho da fonte ---------- */
+  /* ---------- ajuste de fonte ---------- */
   const root = document.documentElement;
-  const MIN_SCALE = 0.85;
-  const MAX_SCALE = 1.35;
-  const STEP = 0.1;
+  let escalaFonte = 1;
+  const MIN_FONTE = 0.85;
+  const MAX_FONTE = 1.3;
 
-  function aplicarEscala(scale) {
-    const val = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale));
-    root.style.setProperty('--font-scale', val.toFixed(2));
-    localStorage.setItem('raiar-cep-escala', val.toFixed(2));
-    return val;
+  function aplicarEscalaFonte() {
+    root.style.setProperty('--font-scale', escalaFonte.toFixed(2));
   }
 
-  let escalaAtual = parseFloat(localStorage.getItem('raiar-cep-escala')) || 1;
-  aplicarEscala(escalaAtual);
+  const btnFonteMais = document.getElementById('btn-fonte-mais');
+  const btnFonteMenos = document.getElementById('btn-fonte-menos');
 
-  const btnMais = document.getElementById('btn-fonte-mais');
-  const btnMenos = document.getElementById('btn-fonte-menos');
-  if (btnMais) btnMais.addEventListener('click', () => { escalaAtual = aplicarEscala(escalaAtual + STEP); });
-  if (btnMenos) btnMenos.addEventListener('click', () => { escalaAtual = aplicarEscala(escalaAtual - STEP); });
-
-  /* ---------- Disco de Newton ---------- */
-  const disco = document.getElementById('newton-disc');
-  const btnGirar = document.getElementById('btn-girar-disco');
-  if (disco && btnGirar) {
-    btnGirar.addEventListener('click', () => {
-      const girando = disco.classList.toggle('spinning');
-      btnGirar.textContent = girando ? 'Parar o disco' : 'Girar o disco';
+  if (btnFonteMais) {
+    btnFonteMais.addEventListener('click', () => {
+      escalaFonte = Math.min(MAX_FONTE, escalaFonte + 0.1);
+      aplicarEscalaFonte();
+    });
+  }
+  if (btnFonteMenos) {
+    btnFonteMenos.addEventListener('click', () => {
+      escalaFonte = Math.max(MIN_FONTE, escalaFonte - 0.1);
+      aplicarEscalaFonte();
     });
   }
 
-  /* ---------- Simulador de eficiência ---------- */
+  /* ---------- disco de Newton ---------- */
+  const btnGirarDisco = document.getElementById('btn-girar-disco');
+  const disco = document.getElementById('newton-disc');
+
+  if (btnGirarDisco && disco) {
+    btnGirarDisco.addEventListener('click', () => {
+      const girando = disco.classList.toggle('spinning');
+      btnGirarDisco.textContent = girando ? 'Parar o disco' : 'Girar o disco';
+    });
+  }
+
+  /* ---------- simulador de eficiência ---------- */
   const rangeInclinacao = document.getElementById('range-inclinacao');
+  const valorInclinacao = document.getElementById('valor-inclinacao');
   const rangeSol = document.getElementById('range-sol');
+  const valorSol = document.getElementById('valor-sol');
   const selectCor = document.getElementById('select-cor');
   const btnSimular = document.getElementById('btn-simular');
-
-  const valorInclinacao = document.getElementById('valor-inclinacao');
-  const valorSol = document.getElementById('valor-sol');
-  const valorEficiencia = document.getElementById('valor-eficiencia');
-  const valorTemp = document.getElementById('valor-temp');
   const statusSimulacao = document.getElementById('status-simulacao');
 
   const simColetor = document.getElementById('sim-coletor');
-  const simRaios = document.getElementById('sim-raios');
   const gaugeArc = document.getElementById('gauge-arc');
   const gaugeNeedle = document.getElementById('gauge-needle');
+  const valorEficiencia = document.getElementById('valor-eficiencia');
+  const valorTemp = document.getElementById('valor-temp');
 
-  const ARC_LENGTH = 283; // comprimento aproximado do arco (raio 90 * PI)
+  const ARCO_TOTAL = 283; // comprimento aproximado do arco do gauge
 
-  // Inclinação ideal de referência: quanto mais perto de ~35°, melhor
-  // capta a luz numa piscina em clima temperado/tropical.
-  function calcularEficiencia() {
-    const inclinacao = Number(rangeInclinacao.value);
-    const sol = Number(rangeSol.value) / 100;
-    const absorcao = Number(selectCor.value);
-
-    const inclinacaoIdeal = 35;
-    const fatorInclinacao = 1 - Math.min(1, Math.abs(inclinacao - inclinacaoIdeal) / 90);
-
-    const eficiencia = Math.round(fatorInclinacao * sol * absorcao * 100);
-    return Math.max(0, Math.min(100, eficiencia));
+  function inclinacaoIdeal(intensidadeSol) {
+    // quanto mais baixa a intensidade (sol mais baixo no céu), maior a inclinação ideal
+    return 20 + (100 - intensidadeSol) * 0.5;
   }
 
   function atualizarVisual() {
@@ -107,66 +98,80 @@ document.addEventListener('DOMContentLoaded', () => {
     valorInclinacao.textContent = inclinacao;
     valorSol.textContent = sol;
 
-    // inclina o coletor visualmente (0° = deitado, 90° = quase de pé)
     if (simColetor) {
-      simColetor.setAttribute('transform', `translate(90,85) rotate(${-inclinacao * 0.5})`);
+      simColetor.setAttribute('transform', `translate(90,85) rotate(${-inclinacao * 0.4})`);
     }
-    // intensidade dos raios de sol reflete a % de sol disponível
-    if (simRaios) {
-      simRaios.style.opacity = String(0.25 + (sol / 100) * 0.75);
-    }
-
-    const eficiencia = calcularEficiencia();
-    valorEficiencia.textContent = eficiencia;
-
-    const offset = ARC_LENGTH - (ARC_LENGTH * eficiencia) / 100;
-    if (gaugeArc) gaugeArc.style.strokeDashoffset = String(offset);
-
-    // agulha vai de -90° (0%) a +90° (100%)
-    const anguloAgulha = -90 + (eficiencia / 100) * 180;
-    if (gaugeNeedle) gaugeNeedle.style.transform = `rotate(${anguloAgulha}deg)`;
   }
 
-  [rangeInclinacao, rangeSol, selectCor].forEach(el => {
-    if (el) el.addEventListener('input', atualizarVisual);
+  function calcularEficiencia() {
+    const inclinacao = Number(rangeInclinacao.value);
+    const sol = Number(rangeSol.value);
+    const absorcao = Number(selectCor.value);
+
+    const ideal = inclinacaoIdeal(sol);
+    const desvio = Math.abs(inclinacao - ideal);
+    const fatorAngulo = Math.max(0, 1 - desvio / 90);
+
+    const eficiencia = Math.round(fatorAngulo * (sol / 100) * absorcao * 100);
+    return Math.min(100, Math.max(0, eficiencia));
+  }
+
+  function simular() {
+    const eficiencia = calcularEficiencia();
+    const ganhoTemp = (eficiencia * 0.06).toFixed(1);
+
+    valorEficiencia.textContent = eficiencia;
+    valorTemp.textContent = ganhoTemp;
+
+    const offset = ARCO_TOTAL - (ARCO_TOTAL * eficiencia) / 100;
+    gaugeArc.style.strokeDashoffset = String(offset);
+
+    const angulo = -90 + (eficiencia / 100) * 180;
+    gaugeNeedle.style.transform = `rotate(${angulo}deg)`;
+
+    let mensagem;
+    if (eficiencia >= 75) {
+      mensagem = 'Ótima configuração! O coletor está captando quase todo o sol disponível.';
+    } else if (eficiencia >= 40) {
+      mensagem = 'Configuração razoável — ajuste a inclinação para se aproximar do ângulo ideal do sol.';
+    } else {
+      mensagem = 'Eficiência baixa. Tente uma inclinação mais próxima da posição do sol e uma superfície mais escura.';
+    }
+    statusSimulacao.textContent = mensagem;
+  }
+
+  [rangeInclinacao, rangeSol].forEach(input => {
+    if (input) input.addEventListener('input', atualizarVisual);
   });
 
   if (btnSimular) {
-    btnSimular.addEventListener('click', () => {
-      const eficiencia = calcularEficiencia();
-      // ganho de temperatura estimado: até ~6°C numa hora com 100% de eficiência
-      const ganho = (eficiencia / 100 * 6).toFixed(1);
-      valorTemp.textContent = ganho;
-      statusSimulacao.textContent =
-        `Simulando 1h de sol: com ${eficiencia}% de eficiência, a água ganharia aproximadamente ${ganho}°C.`;
-    });
+    btnSimular.addEventListener('click', simular);
   }
 
-  atualizarVisual();
+  if (rangeInclinacao && rangeSol) {
+    atualizarVisual();
+  }
 
-  /* ---------- Formulário de contato ---------- */
-  const form = document.getElementById('formulario-contato');
+  /* ---------- formulário de contato ---------- */
+  const formulario = document.getElementById('formulario-contato');
   const mensagemEnvio = document.getElementById('mensagem-envio');
 
-  if (form) {
-    form.addEventListener('submit', (evento) => {
+  if (formulario) {
+    formulario.addEventListener('submit', (evento) => {
       evento.preventDefault();
 
       const nome = document.getElementById('campo-nome').value.trim();
       const email = document.getElementById('campo-email').value.trim();
       const mensagem = document.getElementById('campo-mensagem').value.trim();
-      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-      if (!nome || !emailValido || !mensagem) {
-        mensagemEnvio.textContent = 'Preencha nome, um e-mail válido e uma mensagem antes de enviar.';
-        mensagemEnvio.style.color = '#C4245E';
+      if (!nome || !email || !mensagem) {
+        mensagemEnvio.textContent = 'Preencha todos os campos antes de enviar.';
         return;
       }
 
-      // Este é um protótipo estático (sem back-end): apenas confirma o envio.
-      mensagemEnvio.textContent = `Obrigado, ${nome}! Sua mensagem foi registrada (protótipo sem back-end — ligue um serviço de e-mail/formulário para receber de verdade).`;
-      mensagemEnvio.style.color = '';
-      form.reset();
+      mensagemEnvio.textContent = `Obrigado, ${nome}! Sua mensagem foi registrada (envio simulado neste site estático).`;
+      formulario.reset();
     });
   }
+
 });
