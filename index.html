@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raiar CEP — Aquecimento Solar da Piscina Térmica</title>
+<meta name="description" content="Projeto Integrador: sistema conceitual de aquecimento solar e automação para a piscina térmica do CEP, com óptica, robótica e acessibilidade digital.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="40" height="40">
+          <rect x="2" y="2" width="36" height="36" rx="10" fill="var(--water-900)"/>
+          <circle cx="16" cy="16" r="6" fill="var(--sun-500)"/>
+          <path d="M6 30c4-6 9-9 14-9s10 3 14 9" fill="none" stroke="var(--water-200)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <div>
+        <p class="brand-title">Raiar CEP</p>
+        <p class="brand-sub">Piscina Térmica</p>
+      </div>
+    </div>
+
+    <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="nav-principal">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Abrir menu</span>
+    </button>
+
+    <nav id="nav-principal" class="site-nav" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#desafio">O Desafio</a>
+      <a href="#optica">Óptica Solar</a>
+      <a href="#automacao">Automação</a>
+      <a href="#simulador">Simulador</a>
+      <a href="#acessibilidade">Acessibilidade</a>
+      <a href="#impacto">Impacto</a>
+      <a href="#equipe">Equipe</a>
+    </nav>
+
+    <div class="a11y-controls" role="group" aria-label="Ferramentas de acessibilidade">
+      <button id="btn-contraste" type="button" aria-pressed="false">Alto contraste</button>
+      <button id="btn-fonte-menos" type="button" aria-label="Diminuir tamanho da fonte">A−</button>
+      <button id="btn-fonte-mais" type="button" aria-label="Aumentar tamanho da fonte">A+</button>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- ===== HERO (arte primeiro, texto depois — layout invertido) ===== -->
+  <section id="inicio" class="hero" aria-label="Abertura">
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 420" width="100%" height="100%" role="img" aria-label="Ilustração de um coletor solar circular ao lado de uma piscina, com a água ganhando tons quentes">
+        <title>Coletor solar aquecendo a água da piscina</title>
+        <rect x="0" y="300" width="480" height="120" fill="var(--water-600)"/>
+        <path d="M0 300 q40 -16 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 v0 h-480 z" fill="var(--water-900)"/>
+        <circle cx="80" cy="70" r="38" fill="var(--sun-500)"/>
+        <g stroke="var(--sun-500)" stroke-width="4" stroke-linecap="round">
+          <line x1="80" y1="14" x2="80" y2="0"/>
+          <line x1="128" y1="38" x2="140" y2="26"/>
+          <line x1="32" y1="38" x2="20" y2="26"/>
+          <line x1="128" y1="102" x2="140" y2="114"/>
+        </g>
+        <g class="sun-rays">
+          <line x1="110" y1="100" x2="230" y2="185" stroke="var(--sun-300)" stroke-width="3"/>
+          <line x1="95" y1="115" x2="220" y2="200" stroke="var(--sun-300)" stroke-width="3"/>
+          <line x1="120" y1="130" x2="245" y2="210" stroke="var(--sun-300)" stroke-width="3"/>
+        </g>
+        <g transform="translate(230,150) rotate(18)">
+          <rect x="0" y="0" width="180" height="60" rx="30" fill="var(--water-900)" stroke="var(--sun-500)" stroke-width="3"/>
+          <circle cx="30" cy="30" r="16" fill="none" stroke="var(--sun-300)" stroke-width="2" opacity="0.8"/>
+          <circle cx="90" cy="30" r="16" fill="none" stroke="var(--sun-300)" stroke-width="2" opacity="0.8"/>
+          <circle cx="150" cy="30" r="16" fill="none" stroke="var(--sun-300)" stroke-width="2" opacity="0.8"/>
+          <rect x="172" y="24" width="12" height="12" fill="var(--water-200)"/>
+        </g>
+        <path d="M260 215 q30 25 5 60 t15 55" fill="none" stroke="var(--sun-500)" stroke-width="4" stroke-dasharray="6 6" stroke-linecap="round"/>
+        <text x="266" y="222" class="svg-label" fill="var(--ink)">calor</text>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <p class="eyebrow">Projeto Integrador · Tecnociência, Robótica e Sustentabilidade</p>
+      <h1>Onde a luz vira <span class="hl">calor</span>, e o calor vira <span class="hl-2">piscina aquecida</span>.</h1>
+      <p class="hero-lead">
+        Uma proposta conceitual de aquecimento solar automatizado para a piscina térmica do CEP,
+        construída com óptica aplicada, sensores, atuadores e um site pensado para ser acessível a todas as pessoas.
+      </p>
+      <div class="hero-actions">
+        <a href="#simulador" class="btn btn-primary">Testar o simulador</a>
+        <a href="#optica" class="btn btn-ghost">Ver a ciência por trás</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== O DESAFIO ===== -->
+  <section id="desafio" class="section">
+    <div class="section-head">
+      <p class="eyebrow">01 · Contextualização</p>
+      <h2>Por que aquecer a piscina do CEP é um desafio de engenharia?</h2>
+    </div>
+    <div class="grid-2">
+      <p>
+        Manter uma piscina térmica aquecida durante o ano todo tem um custo alto de energia elétrica ou gás,
+        e nem sempre é uma solução sustentável. O desafio deste projeto foi pensar em uma alternativa que
+        aproveite um recurso gratuito e abundante: a luz do sol. Para isso, unimos três áreas do conhecimento
+        trabalhadas neste trimestre — a <strong>óptica</strong>, que explica como a luz se comporta ao encontrar
+        diferentes materiais; a <strong>robótica e a programação</strong>, que permitem automatizar o sistema; e a
+        <strong>acessibilidade digital</strong>, para que qualquer pessoa da comunidade escolar consiga entender e
+        acompanhar o projeto neste site.
+      </p>
+      <ul class="fact-list">
+        <li><span aria-hidden="true">☀️</span> Fonte de energia gratuita e renovável</li>
+        <li><span aria-hidden="true">🌡️</span> Redução do uso de aquecedores elétricos ou a gás</li>
+        <li><span aria-hidden="true">🤖</span> Sistema automatizado, sem depender de ajuste manual</li>
+        <li><span aria-hidden="true">♿</span> Comunicação acessível para toda a comunidade escolar</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== ÓPTICA ===== -->
+  <section id="optica" class="section section-alt">
+    <div class="section-head">
+      <p class="eyebrow">02 · Tecnociência e Óptica Aplicada</p>
+      <h2>A física da luz escolhendo os materiais do coletor</h2>
+    </div>
+    <div class="grid-2 reverse">
+      <div class="diagram-card">
+        <svg viewBox="0 0 320 200" role="img" aria-labelledby="diag1-title diag1-desc">
+          <title id="diag1-title">Corte transversal de um coletor solar</title>
+          <desc id="diag1-desc">Raios de luz vindos do sol atravessam uma cobertura translúcida, se refratam, atingem uma placa escura onde são absorvidos e viram calor, enquanto uma tubulação leva a água aquecida para a piscina.</desc>
+          <rect x="10" y="120" width="300" height="14" fill="var(--water-900)"/>
+          <rect x="20" y="100" width="280" height="20" fill="var(--water-200)" opacity="0.8"/>
+          <rect x="20" y="112" width="280" height="8" fill="var(--ink)"/>
+          <line x1="60" y1="10" x2="60" y2="100" stroke="var(--sun-500)" stroke-width="2.5"/>
+          <line x1="60" y1="100" x2="80" y2="112" stroke="var(--sun-500)" stroke-width="2.5"/>
+          <line x1="160" y1="10" x2="160" y2="100" stroke="var(--sun-500)" stroke-width="2.5"/>
+          <line x1="160" y1="100" x2="175" y2="112" stroke="var(--sun-500)" stroke-width="2.5"/>
+          <line x1="250" y1="10" x2="250" y2="100" stroke="var(--sun-500)" stroke-width="2.5"/>
+          <line x1="250" y1="100" x2="265" y2="112" stroke="var(--sun-500)" stroke-width="2.5"/>
+          <text x="66" y="60" class="svg-label small">refração</text>
+          <text x="20" y="145" class="svg-label small">absorção → calor</text>
+          <path d="M300 118 h14 v-6 M314 118 v6" fill="none" stroke="var(--water-600)" stroke-width="3"/>
+          <text x="305" y="150" class="svg-label small" text-anchor="end">para a piscina</text>
+        </svg>
+        <p class="diagram-caption">Fig. 1 — corte do coletor: a cobertura refrata a luz para dentro, a placa escura absorve e a água circula levando o calor.</p>
+      </div>
+      <div>
+        <h3>Absorção, reflexão e refração</h3>
+        <p>
+          Quando a luz do sol atinge a placa coletora, três fenômenos ópticos disputam o resultado final:
+        </p>
+        <ul>
+          <li><strong>Absorção</strong> — parte da luz é retida pelo material e transformada em calor. É o que
+            queremos maximizar na placa coletora.</li>
+          <li><strong>Reflexão</strong> — parte da luz "quica" de volta para o ambiente sem virar energia útil.
+            Superfícies claras e polidas refletem mais.</li>
+          <li><strong>Refração</strong> — ao passar pela cobertura de vidro ou policarbonato do coletor, a luz
+            muda de direção e de velocidade, sendo "capturada" dentro da caixa do coletor, um efeito estufa
+            controlado que evita que o calor escape.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2 align-start">
+      <div>
+        <h3>A analogia com o Disco de Newton e a Câmara Escura</h3>
+        <p>
+          O <strong>Disco de Newton</strong>, estudado no primeiro trimestre, mostra que a luz branca é formada
+          pela soma de todas as cores do espectro visível: girando rápido o disco colorido, nosso olho passa a
+          enxergar branco. O oposto acontece com uma superfície <strong>preta fosca</strong>: ela não soma
+          cores para refletir, ela <strong>absorve praticamente todos os comprimentos de onda</strong>. É por
+          isso que a placa do coletor solar é pintada de preto fosco — ela funciona como o "inverso" do disco
+          girando: em vez de somar luz refletida, ela acumula energia absorvida na forma de calor.
+        </p>
+        <p>
+          Já a <strong>câmara escura</strong> mostra como um pequeno orifício consegue direcionar e concentrar
+          a luz em um ponto específico, formando uma imagem nítida do outro lado. Aplicamos essa mesma lógica
+          de <em>concentração da luz</em> em coletores solares com superfícies curvas ou refletoras (como
+          espelhos parabólicos), que direcionam os raios para um único tubo de água, aumentando a eficiência
+          do aquecimento sem precisar aumentar o tamanho da placa.
+        </p>
+        <button id="btn-girar-disco" type="button" class="btn btn-ghost btn-small">Girar o disco</button>
+      </div>
+      <div class="diagram-card">
+        <svg viewBox="0 0 260 260" role="img" aria-labelledby="disco-title disco-desc">
+          <title id="disco-title">Disco de Newton</title>
+          <desc id="disco-desc">Um disco dividido em sete cores do arco-íris que, ao girar rapidamente, parece branco, mostrando que a luz branca é a soma de todas as cores.</desc>
+          <g id="newton-disc" transform="translate(130,130)">
+            <path d="M0 0 L0 -100 A100 100 0 0 1 87 -50 Z" fill="#E11D48"/>
+            <path d="M0 0 L87 -50 A100 100 0 0 1 87 50 Z" fill="#F59E0B"/>
+            <path d="M0 0 L87 50 A100 100 0 0 1 0 100 Z" fill="#FACC15"/>
+            <path d="M0 0 L0 100 A100 100 0 0 1 -87 50 Z" fill="#22C55E"/>
+            <path d="M0 0 L-87 50 A100 100 0 0 1 -87 -50 Z" fill="#0EA5E9"/>
+            <path d="M0 0 L-87 -50 A100 100 0 0 1 -35 -95 Z" fill="#4338CA"/>
+            <path d="M0 0 L-35 -95 A100 100 0 0 1 0 -100 Z" fill="#7C3AED"/>
+          </g>
+        </svg>
+        <p class="diagram-caption">Fig. 2 — Disco de Newton: a luz branca é a soma de todas as cores do espectro. Clique no botão para girar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AUTOMAÇÃO ===== -->
+  <section id="automacao" class="section">
+    <div class="section-head">
+      <p class="eyebrow">03 · Robótica e Programação</p>
+      <h2>Como sensores e atuadores controlam o sistema</h2>
+    </div>
+    <div class="grid-2 align-start">
+      <p>
+        O sistema não depende de alguém ligando e desligando manualmente. Um pequeno programa, rodando em um
+        microcontrolador, lê continuamente os sensores e decide, sozinho, o que os atuadores devem fazer:
+      </p>
+      <ul>
+        <li><strong>Sensor de temperatura (na água e na placa)</strong> — mede se a piscina já está na
+          temperatura ideal ou se ainda precisa de calor.</li>
+        <li><strong>Sensor de luminosidade (LDR)</strong> — identifica a posição do sol ao longo do dia.</li>
+        <li><strong>Microcontrolador</strong> — compara as leituras com os valores ideais programados e toma a
+          decisão.</li>
+        <li><strong>Motor atuador</strong> — inclina o coletor para acompanhar o sol, como um girassol
+          mecânico.</li>
+        <li><strong>Bomba d'água (atuador)</strong> — liga a circulação da água pelo coletor somente quando
+          compensa energeticamente.</li>
+      </ul>
+    </div>
+    <div class="diagram-card wide">
+      <svg viewBox="0 0 900 260" role="img" aria-labelledby="flux-title flux-desc" preserveAspectRatio="xMidYMid meet">
+        <title id="flux-title">Fluxograma do sistema de automação</title>
+        <desc id="flux-desc">O sensor de temperatura lê a água. O microcontrolador verifica se a temperatura está abaixo do ideal. Se sim, liga o motor de inclinação e a bomba, circulando a água pelo coletor solar, e o ciclo recomeça. Se não, o sistema permanece em repouso e volta a checar depois.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/>
+          </marker>
+        </defs>
+        <rect x="20" y="100" width="150" height="60" rx="14" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="95" y="126" class="svg-label small" text-anchor="middle">Sensor de</text>
+        <text x="95" y="142" class="svg-label small" text-anchor="middle">temperatura</text>
+        <line x1="170" y1="130" x2="220" y2="130" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <rect x="222" y="100" width="150" height="60" rx="14" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="297" y="126" class="svg-label small" text-anchor="middle">Microcontrolador</text>
+        <text x="297" y="142" class="svg-label small" text-anchor="middle">(decide)</text>
+        <line x1="372" y1="130" x2="422" y2="130" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <path d="M500 100 L575 130 L500 160 L425 130 Z" fill="var(--sun-100)" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="500" y="126" class="svg-label small" text-anchor="middle">Temp. abaixo</text>
+        <text x="500" y="142" class="svg-label small" text-anchor="middle">do ideal?</text>
+        <line x1="500" y1="160" x2="500" y2="205" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <text x="512" y="185" class="svg-label small">sim</text>
+        <rect x="410" y="207" width="180" height="46" rx="14" fill="var(--surface)" stroke="var(--water-600)" stroke-width="2.5"/>
+        <text x="500" y="235" class="svg-label small" text-anchor="middle">Liga motor + bomba</text>
+        <line x1="590" y1="230" x2="770" y2="230" stroke="var(--water-600)" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <rect x="772" y="204" width="110" height="52" rx="14" fill="var(--surface)" stroke="var(--water-600)" stroke-width="2.5"/>
+        <text x="827" y="226" class="svg-label small" text-anchor="middle">Água circula</text>
+        <text x="827" y="242" class="svg-label small" text-anchor="middle">no coletor</text>
+        <path d="M827 204 C 827 40, 297 40, 297 98" fill="none" stroke="var(--water-600)" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+        <text x="560" y="30" class="svg-label small">ciclo se repete</text>
+        <line x1="575" y1="130" x2="700" y2="130" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <text x="600" y="118" class="svg-label small">não</text>
+        <rect x="702" y="100" width="170" height="60" rx="14" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="787" y="126" class="svg-label small" text-anchor="middle">Sistema em</text>
+        <text x="787" y="142" class="svg-label small" text-anchor="middle">repouso</text>
+      </svg>
+      <p class="diagram-caption">Fig. 3 — fluxograma de decisão: sensores informam, o microcontrolador decide, os atuadores agem.</p>
+    </div>
+  </section>
+
+  <!-- ===== SIMULADOR (painel de controle primeiro, visual depois) ===== -->
+  <section id="simulador" class="section section-alt">
+    <div class="section-head">
+      <p class="eyebrow">04 · Uso de Tecnologias Web</p>
+      <h2>Simulador: teste a eficiência do coletor</h2>
+      <p class="section-lead">Ajuste os controles como se estivesse programando o sistema e veja, em tempo
+        real, como a inclinação e a cor da placa mudam a eficiência do aquecimento.</p>
+    </div>
+    <div class="simulator">
+      <div class="sim-visual">
+        <svg viewBox="0 0 300 190" role="img" aria-label="Coletor solar animado que se inclina conforme os controles, ligado por um cano à piscina">
+          <circle id="sim-sol" cx="248" cy="28" r="18" fill="var(--sun-500)"/>
+          <g id="sim-raios" stroke="var(--sun-300)" stroke-width="3">
+            <line x1="218" y1="45" x2="158" y2="90"/>
+            <line x1="232" y1="53" x2="172" y2="98"/>
+            <line x1="246" y1="61" x2="186" y2="106"/>
+          </g>
+          <g id="sim-coletor" transform="translate(90,85)">
+            <rect x="0" y="0" width="120" height="16" rx="8" fill="var(--water-900)" stroke="var(--sun-500)" stroke-width="2"/>
+            <rect x="-8" y="14" width="9" height="34" fill="var(--water-600)"/>
+          </g>
+          <path id="sim-cano" d="M40 133 V150 H120 V150" fill="none" stroke="var(--water-600)" stroke-width="4" stroke-linecap="round"/>
+          <rect x="0" y="150" width="300" height="40" fill="var(--water-200)"/>
+          <path d="M0 150 q25 -8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="var(--water-600)" stroke-width="2" opacity="0.6"/>
+        </svg>
+        <div class="gauge">
+          <svg viewBox="0 0 200 110" role="img" aria-hidden="true">
+            <path d="M10 100 A90 90 0 0 1 190 100" fill="none" stroke="var(--water-200)" stroke-width="14"/>
+            <path id="gauge-arc" d="M10 100 A90 90 0 0 1 190 100" fill="none" stroke="var(--sun-500)" stroke-width="14" stroke-dasharray="283" stroke-dashoffset="283"/>
+            <line id="gauge-needle" x1="100" y1="100" x2="100" y2="25" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="100" r="6" fill="var(--ink)"/>
+          </svg>
+          <p class="gauge-value"><span id="valor-eficiencia">0</span>% de eficiência</p>
+          <p class="gauge-sub">Ganho estimado: <span id="valor-temp">0</span>°C na água</p>
+        </div>
+      </div>
+      <div class="sim-controls">
+        <div class="control">
+          <label for="range-inclinacao">Inclinação do coletor: <span id="valor-inclinacao">30</span>°</label>
+          <input type="range" id="range-inclinacao" min="0" max="90" value="30">
+        </div>
+        <div class="control">
+          <label for="range-sol">Intensidade de sol (nebulosidade / hora do dia): <span id="valor-sol">80</span>%</label>
+          <input type="range" id="range-sol" min="10" max="100" value="80">
+        </div>
+        <div class="control">
+          <label for="select-cor">Cor da superfície do coletor</label>
+          <select id="select-cor">
+            <option value="0.95">Preto fosco (alta absorção)</option>
+            <option value="0.55">Cinza metálico (absorção média)</option>
+            <option value="0.15">Branco / espelhado (baixa absorção)</option>
+          </select>
+        </div>
+        <button id="btn-simular" type="button" class="btn btn-primary">Simular 1 hora de sol</button>
+        <p id="status-simulacao" class="sim-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACESSIBILIDADE ===== -->
+  <section id="acessibilidade" class="section">
+    <div class="section-head">
+      <p class="eyebrow">05 · Acessibilidade Digital</p>
+      <h2>Um site pensado para ser usado por qualquer pessoa</h2>
+    </div>
+    <div class="grid-2 align-start">
+      <p>
+        Assim como o coletor solar precisa funcionar para toda a comunidade — sol forte ou fraco, dia claro ou
+        nublado — este site precisa funcionar para toda a comunidade escolar, incluindo pessoas com baixa
+        visão, daltonismo ou que navegam apenas pelo teclado. Por isso, aplicamos na prática:
+      </p>
+      <ul class="fact-list">
+        <li>Contraste de cores testado entre texto e fundo em todas as seções</li>
+        <li>Todas as imagens são SVG com título e descrição para leitores de tela</li>
+        <li>Fontes legíveis, com hierarquia clara de tamanhos</li>
+        <li>Navegação por teclado com foco visível em todos os elementos interativos</li>
+        <li>Botão de <strong>alto contraste</strong> e de <strong>ajuste de tamanho da fonte</strong>, no topo da página</li>
+        <li>Estrutura semântica (cabeçalho, navegação, seções, rodapé) para leitores de tela</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== IMPACTO ===== -->
+  <section id="impacto" class="section section-alt">
+    <div class="section-head">
+      <p class="eyebrow">06 · Inovação e Impacto Social</p>
+      <h2>Por que essa proposta importa para o CEP</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="card-tag">econ.</span>
+        <h3>Economia de energia</h3>
+        <p>Reduz a dependência de aquecimento elétrico ou a gás, diminuindo o custo de manutenção da piscina para a escola.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">edu.</span>
+        <h3>Educação em ciência aplicada</h3>
+        <p>Transforma um problema real da escola em laboratório vivo de óptica, robótica e programação para outras turmas.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">socioamb.</span>
+        <h3>Consciência socioambiental</h3>
+        <p>Mostra, na prática, como energia solar e automação podem substituir soluções mais poluentes no dia a dia.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">a11y</span>
+        <h3>Inclusão digital</h3>
+        <p>Um site acessível garante que a proposta chegue a toda a comunidade escolar, sem barreiras de navegação.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EQUIPE / CONTATO ===== -->
+  <section id="equipe" class="section">
+    <div class="section-head">
+      <p class="eyebrow">07 · Equipe</p>
+      <h2>Quem construiu esse projeto</h2>
+    </div>
+    <div class="cards team-cards">
+      <div class="card">
+        <h3>Integrante 1</h3>
+        <p>Função no projeto (ex.: pesquisa de óptica)</p>
+      </div>
+      <div class="card">
+        <h3>Integrante 2</h3>
+        <p>Função no projeto (ex.: programação do simulador)</p>
+      </div>
+      <div class="card">
+        <h3>Integrante 3</h3>
+        <p>Função no projeto (ex.: design e acessibilidade do site)</p>
+      </div>
+      <div class="card">
+        <h3>Integrante 4</h3>
+        <p>Função no projeto (ex.: automação e sensores)</p>
+      </div>
+    </div>
+
+    <form id="formulario-contato" class="contact-form" novalidate>
+      <h3>Fale com a equipe</h3>
+      <label for="campo-nome">Nome</label>
+      <input type="text" id="campo-nome" name="nome" placeholder="Seu nome" required>
+
+      <label for="campo-email">E-mail</label>
+      <input type="email" id="campo-email" name="email" placeholder="seuemail@exemplo.com" required>
+
+      <label for="campo-mensagem">Mensagem</label>
+      <textarea id="campo-mensagem" name="mensagem" rows="5" placeholder="Sua dúvida, sugestão ou elogio" required></textarea>
+
+      <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+      <p id="mensagem-envio" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 · Raiar CEP — Projeto Integrador · Óptica, Robótica e Sustentabilidade</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
